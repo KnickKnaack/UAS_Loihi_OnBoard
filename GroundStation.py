@@ -24,6 +24,7 @@ cmd = Int8()
 #  3 --> uas in transition (landing or taking off)
 
 def stateMonitor(msg):
+    print(f"UAS state changed to: {msg.data}")
     uasState = msg.data
 
 
@@ -62,10 +63,10 @@ def emergency():
     mutex.release()
     
 
-
-
-
 keyMap = {KeyCode(char=' '):emergency, Key.esc:emergency, Key.enter:emergency, KeyCode(char='o'):takeoff, KeyCode(char='l'):land}
+
+# --------------------End Command Functions--------------------------
+
 
 def on_press(key):
     if (key in keyMap):
