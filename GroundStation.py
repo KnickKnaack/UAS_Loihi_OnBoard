@@ -61,6 +61,10 @@ def emergency():
     cmd.data = 2
     cmdPub.publish(Int8)
     mutex.release()
+
+    time.sleep(0.5)
+
+    keyList.stop()
     
 
 keyMap = {KeyCode(char=' '):emergency, Key.esc:emergency, Key.enter:emergency, KeyCode(char='o'):takeoff, KeyCode(char='l'):land}
