@@ -1,5 +1,5 @@
 import rclpy
-from std_msgs import Int8
+from std_msgs.msg import Int8
 import sys
 import time
 from threading import Lock
@@ -88,7 +88,7 @@ def main():
 
 
 if __name__ == '__main__':
-    if (sys.argv[1] == "--debug" or sys.argv[1] == "-debug"):
+    if (len(sys.argv) != 1 and (sys.argv[1] == "--debug" or sys.argv[1] == "-debug")):
         debug = True
 
     main()

@@ -1,6 +1,6 @@
 import rclpy
 from pynput.keyboard import Key, Listener, KeyCode
-from std_msgs import Int8
+from std_msgs.msg import Int8
 import sys
 import time
 from threading import Lock
@@ -90,8 +90,8 @@ def main():
     keyList = Listener(on_press=on_press, on_release=on_release)
     rclpy.init(args=sys.argv)
     rosNode = rclpy.create_node('UAS_Station')
-    cmdPub = rosNode.create_publisher(Int8, '/control_station/UAS0/cmd')
-    stateSub = rosNode.create_subscription(Int8, '/UAS0/state', stateMonitor)
+    cmdPub = rosNode.create_publisher(Int8, '/control_station/UAS0/cmd', 0)
+    stateSub = rosNode.create_subscription(Int8, '/UAS0/state', stateMonitor, 0)
     time.sleep(0.5)
 
 
