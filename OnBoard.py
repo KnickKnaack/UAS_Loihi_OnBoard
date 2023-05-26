@@ -51,7 +51,7 @@ def emergency():
     time.sleep(0.2)
     state.data = 0
     statePub.publish(state)
-    exitLock = False
+    rclpy.shutdown()
 
 
 
@@ -73,18 +73,16 @@ def main():
     statePub = rosNode.create_publisher(Int8, f'/UAS{uasID}/state', 0)
     cmdSub = rosNode.create_subscription(Int8, f'/control_station/UAS{uasID}/cmd', cmdMonitor, 0)
     
-    time.sleep(0.5)
+    time.sleep(10)
     
     state.data = 1
     statePub.publish(state)
 
-    while (exitLock):
-        pass
-
+    rclpy.spin(rosNode)
 
     time.sleep(0.5)
 
-    os.system('sudo shutdown now')
+    #os.system('sudo shutdown now')
 
 
 
