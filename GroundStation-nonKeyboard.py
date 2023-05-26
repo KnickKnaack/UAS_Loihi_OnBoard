@@ -8,7 +8,6 @@ keyList = None
 uasState = 1
 mutex = Lock()
 cmd = Int8()
-listenLock = True
 
 # Command mapping for ground_station command topic
 #  0 --> takeoff
@@ -79,8 +78,7 @@ def on_release(key):
     pass
 
 def listen(args):
-    while(listenLock):
-        rclpy.spin_once(args)
+    rclpy.spin(args)
 
 def print_commands():
     print("Avaliable Commands (where left is key and right is function):")
@@ -88,7 +86,7 @@ def print_commands():
         print(f"{k} - {v.__name__}") 
 
 def main():
-    global cmdPub, stateSub, listenLock
+    global cmdPub, stateSub
     print("Configuring ROS Node")
     rclpy.init(args=sys.argv)
     rosNode = rclpy.create_node('UAS_Station')
@@ -115,7 +113,7 @@ def main():
 
     print("Exiting Program...")
     
-    listenLock = False
+    rclpy.shutdown()
 
     exit(1)
 
