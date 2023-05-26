@@ -68,8 +68,8 @@ keyMap = {0:takeoff, 1:land, 2:emergency}
 def main():
     rclpy.init(args=sys.argv)
     rosNode = rclpy.create_node(f'UAS{uasID}')
-    statePub = rosNode.create_publisher(Int8, f'/UAS{uasID}/state')
-    cmdSub = rosNode.create_subscription(Int8, f'/control_station/UAS{uasID}/cmd', cmdMonitor)
+    statePub = rosNode.create_publisher(Int8, f'/UAS{uasID}/state', 0)
+    cmdSub = rosNode.create_subscription(Int8, f'/control_station/UAS{uasID}/cmd', cmdMonitor, 0)
     
     time.sleep(0.5)
     
