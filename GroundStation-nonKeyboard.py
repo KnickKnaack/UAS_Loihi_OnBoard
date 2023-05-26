@@ -23,6 +23,7 @@ cmd = Int8()
 #  3 --> uas in transition (landing or taking off)
 
 def stateMonitor(msg):
+    global uasState
     print(f"UAS state changed to: {msg.data}")
     uasState = msg.data
 
@@ -62,8 +63,6 @@ def emergency():
     mutex.release()
 
     time.sleep(0.5)
-
-    keyList.stop()
     
 
 keyMap = {'e':emergency, 'o':takeoff, 'l':land}
@@ -85,6 +84,7 @@ def print_commands():
         print(f"{k} - {v.__name__}") 
 
 def main():
+    global cmdPub, stateSub
     print("Configuring ROS Node")
     rclpy.init(args=sys.argv)
     rosNode = rclpy.create_node('UAS_Station')
@@ -94,6 +94,7 @@ def main():
 
 
     input("Press enter to start executing")
+    uIn = None
 
     while (uIn != 'exit'):
         uIn = input("Enter Command: ")
@@ -102,7 +103,7 @@ def main():
             print("Command not avaliable")
             continue
         
-        keyMap[uIn]
+        keyMap[uIn]()
 
     print("Exiting Program...")
     

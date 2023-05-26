@@ -24,6 +24,7 @@ cmd = Int8()
 #  3 --> uas in transition (landing or taking off)
 
 def stateMonitor(msg):
+    global uasState
     print(f"UAS state changed to: {msg.data}")
     uasState = msg.data
 
@@ -86,6 +87,7 @@ def print_commands():
         print(f"{k} - {v.__name__}") 
 
 def main():
+    global cmdPub, stateSub
     print("Configuring ROS Node")
     keyList = Listener(on_press=on_press, on_release=on_release)
     rclpy.init(args=sys.argv)
