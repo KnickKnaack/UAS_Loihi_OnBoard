@@ -111,8 +111,6 @@ def main():
         
         keyMap[uIn]()
 
-        rclpy.spin(rosNode)
-
     print("Exiting Program...")
     
     exit(1)
