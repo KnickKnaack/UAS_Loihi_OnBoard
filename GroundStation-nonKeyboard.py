@@ -77,8 +77,8 @@ def on_press(key):
 def on_release(key):
     pass
 
-def listen(node):
-    rclpy.spin(node)
+def listen(args):
+    rclpy.spin(args[0])
 
 def print_commands():
     print("Avaliable Commands (where left is key and right is function):")
@@ -93,7 +93,7 @@ def main():
     cmdPub = rosNode.create_publisher(Int8, f'/control_station/UAS{0}/cmd', 0)
     stateSub = rosNode.create_subscription(Int8, f'/UAS{0}/state', stateMonitor, 0)
     
-    mylistener = Thread(target=listen, args=rosNode)
+    mylistener = Thread(target=listen, args=[rosNode])
     mylistener.start()
     
     time.sleep(0.5)
