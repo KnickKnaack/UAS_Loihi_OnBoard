@@ -2,7 +2,7 @@ import rclpy
 from std_msgs.msg import Int8
 import sys
 import time
-from threading import Lock
+from threading import Lock, Thread
 
 keyList = None
 uasState = 1
@@ -77,6 +77,8 @@ def on_press(key):
 def on_release(key):
     pass
 
+def listen(node):
+    rclpy.spin(node)
 
 def print_commands():
     print("Avaliable Commands (where left is key and right is function):")
@@ -90,6 +92,10 @@ def main():
     rosNode = rclpy.create_node('UAS_Station')
     cmdPub = rosNode.create_publisher(Int8, f'/control_station/UAS{0}/cmd', 0)
     stateSub = rosNode.create_subscription(Int8, f'/UAS{0}/state', stateMonitor, 0)
+    
+    mylistener = Thread(target=listen, args=rosNode)
+    mylistener.start()
+    
     time.sleep(0.5)
 
 
