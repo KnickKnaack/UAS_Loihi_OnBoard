@@ -88,8 +88,8 @@ def main():
     print("Configuring ROS Node")
     rclpy.init(args=sys.argv)
     rosNode = rclpy.create_node('UAS_Station')
-    cmdPub = rosNode.create_publisher(Int8, '/control_station/UAS0/cmd', 0)
-    stateSub = rosNode.create_subscription(Int8, '/UAS0/state', stateMonitor, 0)
+    cmdPub = rosNode.create_publisher(Int8, f'/control_station/UAS{0}/cmd', 0)
+    stateSub = rosNode.create_subscription(Int8, f'/UAS{0}/state', stateMonitor, 0)
     time.sleep(0.5)
 
 
@@ -104,6 +104,8 @@ def main():
             continue
         
         keyMap[uIn]()
+
+        rclpy.spin(rosNode)
 
     print("Exiting Program...")
     

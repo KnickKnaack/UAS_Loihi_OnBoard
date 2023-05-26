@@ -27,6 +27,7 @@ state = Int8()
 # --------------------Command Functions--------------------------
 
 def takeoff():
+    print('takeoff func in Onboard')
     state.data = 3
     statePub.publish(state)
     #take off procedure
@@ -55,13 +56,13 @@ def emergency():
 
 
 
+keyMap = {0:takeoff, 1:land, 2:emergency}
+
 
 def cmdMonitor(msg):
     print('OnBoard received msg')
     keyMap[msg.data]()
 
-
-keyMap = {0:takeoff, 1:land, 2:emergency}
 
 # --------------------End Command Functions--------------------------
 
