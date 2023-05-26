@@ -2,7 +2,6 @@ import rclpy
 from std_msgs.msg import Int8
 import sys
 import time
-from threading import Lock
 import os
 
 uasID = 0
@@ -52,7 +51,7 @@ def emergency():
     time.sleep(0.2)
     state.data = 0
     statePub.publish(state)
-    rclpy.shutdown()
+    exit(1)
 
 
 
