@@ -47,6 +47,7 @@ def land():
 
 
 def emergency():
+    global exitLock
     #emergency land procedure
     time.sleep(0.2)
     state.data = 0
@@ -66,6 +67,7 @@ keyMap = {0:takeoff, 1:land, 2:emergency}
 
 
 def main():
+    global cmdSub, statePub
     rclpy.init(args=sys.argv)
     rosNode = rclpy.create_node(f'UAS{uasID}')
     statePub = rosNode.create_publisher(Int8, f'/UAS{uasID}/state', 0)
