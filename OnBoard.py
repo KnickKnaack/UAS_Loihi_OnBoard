@@ -70,8 +70,8 @@ def init():
 keyMap = {0:takeoff, 1:land, 2:emergency, 3:init}
 
 
+#callback function to receive and execute commands from ground station
 def cmdMonitor(msg):
-    print('OnBoard received msg')
     keyMap[msg.data]()
 
 
@@ -80,18 +80,19 @@ def cmdMonitor(msg):
 
 def main():
     global cmdSub, statePub
+    #create ros node
     rclpy.init(args=sys.argv)
     rosNode = rclpy.create_node(f'UAS{uasID}')
-    statePub = rosNode.create_publisher(Int8, f'/UAS{uasID}/state', 0)
-    cmdSub = rosNode.create_subscription(Int8, f'/control_station/UAS{uasID}/cmd', cmdMonitor, 0)
-    
-    state.data = 1
-    statePub.publish(state)
 
+    #create publisher for the current state of the drone
+    statePub = rosNode.create_publisher(Int8, f'/UAS{uasID}/state', 0)
+    #create subscriber to Ground station commands 
+    cmdSub = rosNode.create_subscription(Int8, f'/control_station/UAS{uasID}/cmd', cmdMonitor, 0)
+
+    #listen for and execute commands from the cmd topic
     rclpy.spin(rosNode)
 
-    time.sleep(0.5)
-
+    #this is when we are using the headless system to shut down the drone
     #os.system('sudo shutdown now')
 
 

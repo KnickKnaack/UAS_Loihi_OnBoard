@@ -24,7 +24,7 @@ cmd = Int8()
 
 def stateMonitor(msg):
     global uasState
-    print(f"UAS state changed to: {msg.data}")
+    #print(f"UAS state changed to: {msg.data}")
     uasState = msg.data
 
 
