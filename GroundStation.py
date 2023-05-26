@@ -39,7 +39,7 @@ def takeoff():
 
     mutex.acquire()
     cmd.data = 0
-    cmdPub.publish(Int8)
+    cmdPub.publish(cmd)
     mutex.release()
 
 
@@ -51,7 +51,7 @@ def land():
     
     mutex.acquire()
     cmd.data = 1
-    cmdPub.publish(Int8)
+    cmdPub.publish(cmd)
     mutex.release()
 
 
@@ -60,7 +60,7 @@ def emergency():
 
     mutex.acquire()
     cmd.data = 2
-    cmdPub.publish(Int8)
+    cmdPub.publish(cmd)
     mutex.release()
 
     time.sleep(0.5)
