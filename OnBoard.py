@@ -7,7 +7,7 @@ import os
 uasID = 0
 exitLock = True
 debug = False
-uasState = None
+uasState = 1
 state = Int8()
 
 # Command mapping for ground_station command topic
@@ -26,36 +26,48 @@ state = Int8()
 # --------------------Command Functions--------------------------
 
 def takeoff():
-    print('takeoff func in Onboard')
+    global uasState
     state.data = 3
+    uasState = 3
     statePub.publish(state)
     #take off procedure
     time.sleep(0.2)
 
     state.data = 2
+    uasState = 2
     statePub.publish(state)
 
 
 def land():
+    global uasState
     state.data = 3
+    uasState = 3
     statePub.publish(state)
     #take off procedure
     time.sleep(0.2)
     state.data = 1
+    uasState = 1
     statePub.publish(state)
 
 
 def emergency():
-    global exitLock
+    global exitLock, uasState
     #emergency land procedure
     time.sleep(0.2)
     state.data = 0
+    uasState = 0
     statePub.publish(state)
     exit(1)
 
 
+def init():
+    #send current state
+    state.data = uasState
+    statePub.publish(state)
 
-keyMap = {0:takeoff, 1:land, 2:emergency}
+
+
+keyMap = {0:takeoff, 1:land, 2:emergency, 3:init}
 
 
 def cmdMonitor(msg):
@@ -72,8 +84,6 @@ def main():
     rosNode = rclpy.create_node(f'UAS{uasID}')
     statePub = rosNode.create_publisher(Int8, f'/UAS{uasID}/state', 0)
     cmdSub = rosNode.create_subscription(Int8, f'/control_station/UAS{uasID}/cmd', cmdMonitor, 0)
-    
-    time.sleep(10)
     
     state.data = 1
     statePub.publish(state)

@@ -100,9 +100,11 @@ def main():
     
     mylistener = Thread(target=listen, args=rosNode)
     mylistener.start()
-    
+
     time.sleep(0.5)
 
+    cmd.data = 3
+    cmdPub.publish(cmd)
 
     input("Press enter to start executing")
 
@@ -112,6 +114,8 @@ def main():
 
     print("Exiting Program...")
     
+    rclpy.shutdown()
+
     exit(1)
 
 

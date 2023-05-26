@@ -98,6 +98,9 @@ def main():
     
     time.sleep(0.5)
 
+    cmd.data = 3
+    cmdPub.publish(cmd)
+
 
     input("Press enter to start executing")
     uIn = None
