@@ -78,7 +78,7 @@ def on_release(key):
     pass
 
 def listen(args):
-    rclpy.spin(args[0])
+    rclpy.spin(args)
 
 def print_commands():
     print("Avaliable Commands (where left is key and right is function):")
