@@ -8,7 +8,6 @@ import os
 uasID = 0
 exitLock = True
 debug = False
-statePub = None
 uasState = None
 state = Int8()
 
@@ -58,6 +57,7 @@ def emergency():
 
 
 def cmdMonitor(msg):
+    print('OnBoard received msg')
     keyMap[msg.data]()
 
 

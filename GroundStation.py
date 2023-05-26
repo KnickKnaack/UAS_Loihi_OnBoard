@@ -6,7 +6,6 @@ import time
 from threading import Lock
 
 keyList = None
-cmdPub = None
 uasState = None
 mutex = Lock()
 cmd = Int8()

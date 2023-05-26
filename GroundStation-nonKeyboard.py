@@ -5,7 +5,6 @@ import time
 from threading import Lock
 
 keyList = None
-cmdPub = None
 uasState = 1
 mutex = Lock()
 cmd = Int8()
@@ -39,6 +38,7 @@ def takeoff():
     mutex.acquire()
     cmd.data = 0
     cmdPub.publish(cmd)
+    print('published cmd from GS')
     mutex.release()
 
 
